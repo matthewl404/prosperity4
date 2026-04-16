@@ -1,6 +1,12 @@
-# IMC Prosperity 4 — Matthew's Writeup
+# IMC Prosperity 4 — matthewl404
 
-A round-by-round log of my experience in the IMC Prosperity 4 algorithmic trading competition. Covers both the algorithmic and manual trading components.
+Round-by-round writeup of my experience in IMC Prosperity 4, an algorithmic + manual trading competition by IMC Trading.
+
+---
+
+## Competition Overview
+
+You play as a trader establishing an outpost on the planet Intara, earning profit across 5 rounds of algorithmic and manual trading. Goal for round 1: **200,000 XIRECs net profit** before the third trading day.
 
 ---
 
@@ -23,48 +29,41 @@ prosperity4/
 ├── README.md
 ├── round1/
 │   ├── algo/
-│   │   └── trader.py         # Algorithm submitted for round 1
-│   ├── manual/
-│   │   └── notes.md          # Manual trading decisions + reasoning
-│   └── writeup.md            # Round 1 reflection
+│   │   ├── trader_v3.py       # Submitted algorithm
+│   │   └── notes.md           # Strategy breakdown
+│   └── manual/
+│       └── notes.md           # Manual trading decisions
 ├── round2/
 │   └── ...
-└── utils/
-    └── helpers.py            # Shared utilities (e.g. order book parsing)
 ```
 
 ---
 
-## Round 1
+## Round 1 — First Intarian Goods
 
 ### Products
-- **Rainforest Resin** — stable, close to fair value
-- **Kelp** — momentum-driven
-- **Squid Ink** — high volatility
+| Product | Position Limit |
+|---------|---------------|
+| `INTARIAN_PEPPER_ROOT` | 80 |
+| `ASH_COATED_OSMIUM` | 80 |
 
 ### Algo Strategy
-> TBD — fill in after submission
+- **INTARIAN_PEPPER_ROOT** — price drifts +1 every ~10 ticks. Strategy: buy and hold at max position (80), never sell.
+- **ASH_COATED_OSMIUM** — mean-reverts around ~10,000. Strategy: market making with penny-jump quoting, aggressive taking at fair value, and inventory skew to stay flat.
 
-### Manual Trading
+See [`round1/algo/notes.md`](round1/algo/notes.md) for full breakdown and code.
 
-**Dryland Flax**
-- Guaranteed sell price: 30 XIRECs, no fees
-- Best ask in the book: 28 (40k volume)
-- Strategy: Buy at price 30, volume 40,000 → guaranteed +2/unit = **+80k XIRECs**
+### Manual Trading — An Intarian Welcome
+Two sealed-bid auctions for `DRYLAND_FLAX` and `EMBER_MUSHROOM`. Both have guaranteed buyback prices after the auction closes, so the edge is purely buying below the buyback price.
 
-**Ember Mushroom**
-- Guaranteed sell price: 20 XIRECs, fees 0.05 buy + 0.05 sell = 0.10/unit
-- Net value per unit: 19.90
-- All asks from 12–19 are profitable
-- Strategy: Buy at price 19, sweep ~113k units → expected **+615k XIRECs**
+| Product | Buyback | Fee | Net Value | Order |
+|---------|---------|-----|-----------|-------|
+| `DRYLAND_FLAX` | 30 | 0 | 30.00 | Buy @ 30, vol 40,000 |
+| `EMBER_MUSHROOM` | 20 | 0.10/unit | 19.90 | Buy @ 19, vol 113,000 |
 
-| Good | Side | Price | Volume |
-|------|------|-------|--------|
-| Dryland Flax | Buy | 30 | 40,000 |
-| Ember Mushroom | Buy | 19 | 113,000 |
+Expected manual profit: **~695,000 XIRECs**
 
-### Reflection
-> TBD — what worked, what didn't, what I'd change
+See [`round1/manual/notes.md`](round1/manual/notes.md) for order book analysis.
 
 ---
 
@@ -88,11 +87,6 @@ prosperity4/
 
 ---
 
-## Key Takeaways
-> To be filled in after the competition ends
-
----
-
 ## About
 
-First time doing Prosperity. Going in with a background in competitive programming and quant prep (Jane Street AMP, combinatorics, expected value). Main focus is building solid mean-reversion and market-making strategies on the algo side while staying sharp on the manual rounds.
+First time doing Prosperity. Background in competitive programming and quant prep (Jane Street AMP, combinatorics, EV problems). Starting at NYU Tandon for Computer Engineering in Fall 2026.
