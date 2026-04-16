@@ -89,4 +89,4 @@ See [`round1/manual/notes.md`](round1/manual/notes.md) for order book analysis.
 
 ## About
 
-First time doing Prosperity. Background in competitive programming and quant prep (Jane Street AMP, combinatorics, EV problems). Starting at NYU Tandon for Computer Engineering in Fall 2026.
+First time doing Prosperity.
